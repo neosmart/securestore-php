@@ -53,7 +53,7 @@ Value: v1Lp9X7mN2B5vR8zQ4tW1eY6uI0oP3aS5dF7gH9j
 
 Secrets can be retrieved [at the commandline with `ssclient`](https://github.com/neosmart/securestore-rs/tree/master/ssclient) or programmatically with a SecureStore library [for your development language or framework of choice](https://neosmart.net/SecureStore).
 
-This library contains the PHP implementation of the SecureStore protocol. The implementation is fully contained within the single `SecureStore.php` file and also published to packageist for use with `composer` – use whichever option you are most comfortable with.
+This library contains the PHP implementation of the SecureStore protocol. The implementation is fully contained within the single `SecureStore.php` file and also published to packagist for use with `composer` – use whichever option you are most comfortable with.
 
 ```sh
 composer add neosmart/securestore
