@@ -1,0 +1,39 @@
+{
+    "name": "neosmart/securestore",
+    "description": "PHP interface to load and decrypt SecureStore secrets.",
+    "keywords": [
+        "secrets",
+        "encryption"
+    ],
+    "homepage": "https://neosmart.net/SecureStore/",
+    "readme": "README.md",
+    "funding": [
+        {
+            "type": "other",
+            "url": "https://mqudsi.com/donate/"
+        },
+        {
+            "type": "other",
+            "url": "https://neosmart.net/donate/"
+        }
+    ],
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
+    },
+    "authors": [
+        {
+            "name": "Mahmoud Al-Qudsi",
+            "email": "mqudsi@neosmart.net"
+        }
+    ],
+    "require": {
+        "php": ">=8.0",
+        "ext-json": "*",
+        "ext-openssl": "*",
+        "ext-hash": "*"
+    }
+}
