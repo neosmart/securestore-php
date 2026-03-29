@@ -33,7 +33,6 @@
     "require": {
         "php": ">=8.0",
         "ext-json": "*",
-        "ext-openssl": "*",
-        "ext-hash": "*"
+        "ext-openssl": "*"
     }
 }
