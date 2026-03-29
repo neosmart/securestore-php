@@ -10,7 +10,7 @@ _This PHP library is largely intended to be used alongside one of the SecureStor
 
 Typical SecureStore usage begins by creating a new SecureStore "vault" (an encrypted secrets container) that will store the credentials (usually both usernames and passwords) that your app will need. Begin by compiling or downloading and installing a copy of [`ssclient`](https://github.com/neosmart/securestore-rs/tree/master/ssclient), the SecureStore companion cli.
 
-While you can compile it yourself or manually download [pre-built binaries for your platform](https://github.com/neosmart/securestore-rs/releases), you might find it easiest to just install it with `npm`
+While you can compile it yourself or manually download [pre-built binaries for your platform](https://github.com/neosmart/securestore-rs/releases), you might find it easiest to just install it with `npm`:
 
 ```bash
 ~> npm install --global ssclient
@@ -72,12 +72,11 @@ $sm = SecretsManager::loadWithKeyFile('secure/secrets.json', 'secure/secrets.key
 // List all secrets
 $allKeys = $sm->keys();
 
-// Retrieve a decrypted secret
-$apiKey = $sm->get('API_KEY');
+// Retrieve and decrypt secrets
+$accessId  = $sm->get('aws:s3:accessId');
+$accessKey = $sm->get('aws:s3:accessKey');
 
-if ($apiKey !== null) {
-    echo "Your API key is: " . $apiKey;
-}
+// Continue to use them as you normally would
 ```
 
 While it is **strongly recommended** to only load secrets programmatically via the encryption key, an alternative `SecretsManager::loadWithPassword("path/to/secrets.json", "your-password")` interface is also available (this can be used if you're developing an interactive tool using SecureStore, for example).
