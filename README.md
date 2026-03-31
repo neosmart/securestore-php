@@ -1,3 +1,5 @@
+[![Latest Stable Version](http://poser.pugx.org/neosmart/securestore/v)](https://packagist.org/packages/neosmart/securestore) [![Latest Unstable Version](http://poser.pugx.org/neosmart/securestore/v/unstable)](https://packagist.org/packages/neosmart/securestore) [![License](http://poser.pugx.org/neosmart/securestore/license)](https://packagist.org/packages/neosmart/securestore) [![PHP Version Require](http://poser.pugx.org/neosmart/securestore/require/php)](https://packagist.org/packages/neosmart/securestore)
+
 # SecureStore PHP library
 
 This repository/package houses a PHP implementation of the cross-platform, language-agnostic [SecureStore secrets specification](https://neosmart.net/SecureStore). In particular, this library may be used for interacting with [SecureStore](https://github.com/neosmart/securestore-rs) secrets containers, providing an easy-to-use and idiomatic interface for loading SecureStore containers and decrypting/retrieving secrets from within your existing PHP code.
