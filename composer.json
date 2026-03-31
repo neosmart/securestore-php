@@ -1,6 +1,6 @@
 {
     "name": "neosmart/securestore",
-    "description": "PHP interface to load and decrypt SecureStore secrets.",
+    "description": "Load and decrypt SecureStore vault secrets.",
     "keywords": [
         "secrets",
         "encryption"
