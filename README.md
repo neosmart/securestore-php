@@ -56,7 +56,7 @@ Secrets can be retrieved [at the commandline with `ssclient`](https://github.com
 This library contains the PHP implementation of the SecureStore protocol. The implementation is fully contained within the single `SecureStore.php` file and also published to packagist for use with `composer` – use whichever option you are most comfortable with.
 
 ```sh
-composer add neosmart/securestore
+composer require neosmart/securestore
 ```
 
 ```php
