@@ -95,34 +95,69 @@ class SecretsManager
 
     /**
      * Load a SecureStore vault, decrypting with the provided password.
+     *
+     * @deprecated Consider using SecretsManager::fromFile() with KeySource::fromPassword()
      */
     public static function loadWithPassword(string $path, string $password): self
     {
-        return self::load($path, KeySource::fromPassword($password));
+        return self::fromFile($path, KeySource::fromPassword($password));
     }
 
     /**
      * Load a SecureStore vault, decrypting with a key loaded from the provided path.
+     *
+     * @deprecated Consider using SecretsManager::fromFile() with KeySource::fromFile()
      */
     public static function loadWithKeyFile(string $path, string $keyPath): self
     {
-        return self::load($path, KeySource::fromFile($keyPath));
+        return self::fromFile($path, KeySource::fromFile($keyPath));
     }
 
     /**
      * Load a SecureStore vault, decrypting with a key loaded from the provided KeySource.
+     *
+     * @deprecated Use SecretsManager::fromFile() instead.
      */
     public static function load(string $path, KeySource $keySource): self
+    {
+        return self::fromFile($path, $keySource);
+    }
+
+    /**
+     * Load a SecureStore vault from the JSON file on-disk at the specified path.
+     */
+    public static function fromFile(string $path, KeySource $keySource): self
     {
         if (!file_exists($path)) {
             throw new Exception("SecureStore vault not found: $path");
         }
 
-        $data = json_decode(file_get_contents($path), true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new Exception("Failed to parse SecureStore vault JSON.");
+        $json = file_get_contents($path);
+        if ($json === false) {
+            throw new Exception("Failed to read SecureStore vault file: $path");
         }
 
+        return self::fromJson($json, $keySource);
+    }
+
+    /**
+     * Load a SecureStore vault from the raw JSON contents of the SecureStore vault.
+     */
+    public static function fromJson(string $json, KeySource $keySource): self
+    {
+        $data = json_decode($json, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new Exception("Failed to parse SecureStore vault JSON: " . json_last_error_msg());
+        }
+
+        return self::fromArray($data, $keySource);
+    }
+
+    /**
+     * Load a SecureStore vault from the parsed PHP array contents of the SecureStore JSON vault.
+     */
+    private static function fromArray(array $data, KeySource $keySource): self
+    {
         if (($data['version'] ?? 0) !== 3) {
             throw new Exception("Unsupported SecureStore version. This library supports v3.");
         }

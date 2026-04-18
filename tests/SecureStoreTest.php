@@ -6,6 +6,7 @@ namespace NeoSmart\SecureStore\Tests;
 
 use PHPUnit\Framework\TestCase;
 use NeoSmart\SecureStore\SecretsManager;
+use NeoSmart\SecureStore\KeySource;
 use RuntimeException;
 use Exception;
 
@@ -106,7 +107,7 @@ class SecureStoreTest extends TestCase
         $this->runCli(['create', '-s', $this->storePath, '-p', self::TEST_PASSWORD, '--no-vcs']);
         $this->runCli(['set', '-s', $this->storePath, '-p', self::TEST_PASSWORD, self::TEST_KEY, self::TEST_SECRET]);
 
-        $store = SecretsManager::loadWithPassword($this->storePath, self::TEST_PASSWORD);
+        $store = SecretsManager::fromFile($this->storePath, KeySource::fromPassword(self::TEST_PASSWORD));
 
         $this->assertEquals(self::TEST_SECRET, $store->get(self::TEST_KEY));
     }
@@ -124,6 +125,7 @@ class SecureStoreTest extends TestCase
         $this->runCli(['set', '-s', $this->storePath, '-p', self::TEST_PASSWORD, self::TEST_KEY, self::TEST_SECRET]);
 
         $store = SecretsManager::loadWithKeyFile($this->storePath, $this->keyPath);
+        $store = SecretsManager::fromFile($this->storePath, KeySource::fromFile($this->keyPath));
 
         $this->assertEquals(self::TEST_SECRET, $store->get(self::TEST_KEY));
     }
@@ -143,7 +145,7 @@ class SecureStoreTest extends TestCase
         $this->runCli(['set', '-s', $this->storePath, '-p', self::TEST_PASSWORD, self::TEST_KEY, self::TEST_SECRET]);
         $this->runCli(['set', '-s', $this->storePath, '-p', self::TEST_PASSWORD, self::NEW_LABEL, self::NEW_SECRET]);
 
-        $store = SecretsManager::loadWithPassword($this->storePath, self::TEST_PASSWORD);
+        $store = SecretsManager::fromFile($this->storePath, KeySource::fromPassword(self::TEST_PASSWORD));
         $keys = $store->keys();
 
         $this->assertIsArray($keys);
