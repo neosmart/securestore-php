@@ -67,9 +67,13 @@ composer require neosmart/securestore
 // require __DIR__ . '/vendor/autoload.php';
 
 use NeoSmart\SecureStore\SecretsManager;
+use NeoSmart\SecureStore\KeySource;
 
 // Load a vault using the decryption key file
-$sm = SecretsManager::loadWithKeyFile('secure/secrets.json', 'secure/secrets.key');
+$sm = SecretsManager::fromFile(
+    'secure/secrets.json',
+    KeySource::fromFile('secure/secrets.key')
+);
 
 // List all secrets
 $allKeys = $sm->keys();
@@ -81,7 +85,7 @@ $accessKey = $sm->get('aws:s3:accessKey');
 // Continue to use them as you normally would
 ```
 
-While it is **strongly recommended** to only load secrets programmatically via the encryption key, an alternative `SecretsManager::loadWithPassword("path/to/secrets.json", "your-password")` interface is also available (this can be used if you're developing an interactive tool using SecureStore, for example).
+While it is **strongly recommended** to only load secrets programmatically via the encryption key, an alternative `KeySource::fromPassword("your-password")` interface is also available (this can be used if you're developing an interactive tool using SecureStore, for example). Shorthand convenience methods like `loadWithPassword()` and `loadWithKeyFile()` are also provided for simpler initialization in the usual cases.
 
 # API overview
 
@@ -92,9 +96,10 @@ The primary class used to load vaults and retrieve decrypted secrets.
 
 | Method | Description |
 |:---|:---|
-| `static loadWithKeyFile(string $path, string $keyPath): self` | A convenience method to load and decrypt a vault using SecureStore key file. |
-| `static loadWithPassword(string $path, string $password): self` | A convenience method to load and decrypt a vault with a password. |
-| `static load(string $path, KeySource $keySource): self` | Loads a vault using a pre-configured `KeySource` object. |
+| `static fromFile(string $path, KeySource $keySource): self` | **(Recommended)** Load a SecureStore vault from a SecureStore vault on disk. |
+| `static fromJson(string $json, KeySource $keySource): self` | **(Recommended)** Load a SecureStore vault from raw SecureStore JSON contents. |
+| `static loadWithKeyFile(string $path, string $keyPath): self` | *(Convenience)* Load and decrypt a vault using a SecureStore key file. |
+| `static loadWithPassword(string $path, string $password): self` | *(Convenience)* Load and decrypt a vault with a password. |
 | `get(string $name): ?string` | Retrieves and decrypts a specific secret by its key name. Returns `null` if the secret does not exist. |
 | `keys(): array` | Returns an array containing the names of all secrets available in the loaded vault. |
 
