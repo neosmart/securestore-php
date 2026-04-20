@@ -23,7 +23,7 @@ after which you can proceed with the following steps:
 ```bash
 ~> mkdir secure/
 ~> cd secure/
-~> ssclient create --export-key secrets.key
+~> ssclient create --export-key secrets.key secrets.json
 Password: ************
 Confirm Password: ************
 
